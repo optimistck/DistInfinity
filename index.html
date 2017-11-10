@@ -1,0 +1,125 @@
+<!-- starter HTML borrowed, with authorization, from codingheros.io  -->
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:100,300,400,600" rel="stylesheet" type="text/css">
+        <link href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css">
+        <link type="text/css" rel="stylesheet" href="style.css">
+        <title>Distributed Infinity</title>
+    </head>
+    <body>
+        
+        <div class="top">
+            <div class="inventory">
+                <div class="inventory__title">
+                    Books available for <span class="inventory__title--month">%Month%</span>:
+                </div>
+                
+                <div class="inventory__value">50</div>
+                
+                <div class="inventory__available clearfix">
+                    <div class="inventory__available--text">Available</div>
+                    <div class="right">
+                        <div class="inventory__available--value">45</div>
+                        <div class="inventory__available--percentage">&nbsp;</div>
+                    </div>
+                </div>
+                
+                <div class="inventory__inuse clearfix">
+                    <div class="inventory__inuse--text">Inuse</div>
+                    <div class="right clearfix">
+                        <div class="inventory__inuse--value">5</div>
+                        <div class="inventory__inuse--percentage">45%</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+        <div class="bottom">
+            <div class="add">
+                <div class="add__container">
+                    <select class="add__type">
+                        <option value="ava" selected>+</option>
+                        <option value="inu">-</option>
+                    </select>
+                    <input type="text" class="add__description" placeholder="Add description">
+                    <input type="number" class="add__value" placeholder="Value">
+                    <button class="add__btn"><i class="ion-ios-checkmark-outline"></i></button>
+                </div>
+            </div>
+            
+            <div class="container clearfix">
+                <div class="available">
+                    <h2 class="available__title">Available</h2>
+                    
+                    <div class="available__list">
+                       
+                        <!--
+                        <div class="item clearfix" id="available-0">
+                            <div class="item__description">Item 1</div>
+                            <div class="right clearfix">
+                                <div class="item__value">10</div>
+                                <div class="item__delete">
+                                    <button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="item clearfix" id="available-1">
+                            <div class="item__description">Item 2</div>
+                            <div class="right clearfix">
+                                <div class="item__value">20</div>
+                                <div class="item__delete">
+                                    <button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        -->
+                        
+                    </div>
+                </div>
+                
+                
+                
+                <div class="inuse">
+                    <h2 class="inuse__title">In use</h2>
+                    
+                    <div class="inuse__list">
+                       
+                        <!--
+                        <div class="item clearfix" id="inuse-0">
+                            <div class="item__description">Item 3</div>
+                            <div class="right clearfix">
+                                <div class="item__value">7</div>
+                                <div class="item__percentage">15%</div>
+                                <div class="item__delete">
+                                    <button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="item clearfix" id="inuse-1">
+                            <div class="item__description">Item 4</div>
+                            <div class="right clearfix">
+                                <div class="item__value">15</div>
+                                <div class="item__percentage">10%</div>
+                                <div class="item__delete">
+                                    <button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        -->
+                        
+                    </div>
+                </div>
+            </div>
+            
+            
+        </div>
+        
+        <script src="app.js"></script>
+    </body>
+</html>
