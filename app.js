@@ -8,7 +8,29 @@ var inventoryController = (function() {
 // UI CONTROLLER (VIEW)
 var UIController = (function() {
 
-	// Some code
+	var DOMstrings = {
+		inputIsAvailable: '.is__available',
+		inputTitle: '.add__title',
+		inputID: '.add__id',
+		inputCollateral: '.add__collateral',
+		inputBtn: '.add__btn'
+	}
+
+	return {
+		getInput: function() {
+			return {
+				type: document.querySelector(DOMstrings.inputIsAvailable).value, // returns yes or no
+				title: document.querySelector(DOMstrings.inputTitle).value,
+				id: document.querySelector(DOMstrings.inputID).value,
+				collateral: document.querySelector(DOMstrings.inputCollateral).value		
+			}
+		},
+
+		// make DOMsettings public and visible to the controller
+		getDOMstrings: function() {
+			return DOMstrings;
+		}
+	}
 
 })();
 
@@ -16,8 +38,12 @@ var UIController = (function() {
 // GLOBAL APP (CONTROLLER)
 var controller = (function(inventoryCtrl, UICtrl) {
 
+	var DOM = UICtrl.getDOMstrings();
+
 	var ctrlAddItem = function() {
 		// 1. Get the field input data
+		var input = UICtrl.getInput();
+		console.log(input);
 
 		// 2. Add the item to the inventory controller
 
@@ -27,7 +53,6 @@ var controller = (function(inventoryCtrl, UICtrl) {
 
 		// 5. Display the inventory in UI
 
-		console.log('It works');
 	}
 
 	//event listener for click on "add" button. 

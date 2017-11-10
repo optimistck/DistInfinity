@@ -127,7 +127,7 @@ body {
     text-align: center;
 }
 
-.add__type {
+.is__available {
     width: 55px;
     border: 1px solid #e7e7e7;
     height: 44px;
@@ -139,8 +139,9 @@ body {
     transition: border 0.3s;
 }
 
-.add__description,
-.add__value {
+.add__title,
+.add__id,
+.add__collateral {
     border: 1px solid #e7e7e7;
     background-color: #fff;
     color: inherit;
@@ -153,7 +154,8 @@ body {
 }
 
 .add__description { width: 400px;}
-.add__value { width: 100px;}
+.add__id { width: 300px; }
+.add__collateral { width: 100px;}
 
 .add__btn {
     font-size: 35px;
