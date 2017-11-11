@@ -38,7 +38,17 @@ var UIController = (function() {
 // GLOBAL APP (CONTROLLER)
 var controller = (function(inventoryCtrl, UICtrl) {
 
-	var DOM = UICtrl.getDOMstrings();
+	var initiateEventListeners = function() {
+		var DOM = UICtrl.getDOMstrings();
+		//event listener for click on "add" button. 
+		document.querySelector('.add__btn').addEventListener('click', ctrlAddItem);
+		// event listener for the Enter key
+		document.addEventListener('keypress', function(event) {
+			if (event.keyCode === 13 || event.which === 13) {
+				ctrlAddItem();
+			}
+		});
+	};
 
 	var ctrlAddItem = function() {
 		// 1. Get the field input data
@@ -53,18 +63,17 @@ var controller = (function(inventoryCtrl, UICtrl) {
 
 		// 5. Display the inventory in UI
 
+	};
+
+	return {
+		init: function() {
+			initiateEventListeners();
+		}
 	}
 
-	//event listener for click on "add" button. 
-	document.querySelector('.add__btn').addEventListener('click', ctrlAddItem);
 
-	// event listener for the Enter key
-	document.addEventListener('keypress', function(event) {
-		if (event.keyCode === 13 || event.which === 13) {
-			ctrlAddItem();
-		}
-	});
+
 
 })(inventoryController, UIController);
 
-
+controller.init();
