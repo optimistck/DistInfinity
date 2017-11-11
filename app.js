@@ -9,7 +9,7 @@ var inventoryController = (function() {
 	};
 
 	var inventory = {
-		allitems: {
+		allItems: {
 			books: []
 		},
 		status: {
@@ -18,6 +18,22 @@ var inventoryController = (function() {
 		}
 	}
 
+
+	return {
+		addItem: function(isAvail, title, id, coltr) {
+			var newItem;
+			newItem = new Item(isAvail, title, id, coltr);
+			// add new item object to the array of books
+			inventory.allItems.books.push(newItem);
+			return newItem;
+		},
+
+		//temp
+		testing: function() {
+			console.log(inventory);
+		}
+
+	}
 
 })();
 
@@ -36,7 +52,7 @@ var UIController = (function() {
 	return {
 		getInput: function() {
 			return {
-				type: document.querySelector(DOMstrings.inputIsAvailable).value, // returns yes or no
+				isAvailable: document.querySelector(DOMstrings.inputIsAvailable).value, // returns yes or no
 				title: document.querySelector(DOMstrings.inputTitle).value,
 				id: document.querySelector(DOMstrings.inputID).value,
 				collateral: document.querySelector(DOMstrings.inputCollateral).value		
@@ -68,11 +84,14 @@ var controller = (function(inventoryCtrl, UICtrl) {
 	};
 
 	var ctrlAddItem = function() {
+		var newItem;
+
 		// 1. Get the field input data
 		var input = UICtrl.getInput();
-		console.log(input);
 
 		// 2. Add the item to the inventory controller
+		newItem = inventoryCtrl.addItem(input.isAvailable, input.title, input.id, input.collateral);
+
 
 		// 3. Add a new item to UI
 
