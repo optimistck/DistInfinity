@@ -46,17 +46,39 @@ var UIController = (function() {
 		inputTitle: '.add__title',
 		inputID: '.add__id',
 		inputCollateral: '.add__collateral',
-		inputBtn: '.add__btn'
+		inputBtn: '.add__btn', 
+		containerAvailable: '.available__list',
+		containerInUse: '.inuse__list'
 	}
 
 	return {
 		getInput: function() {
 			return {
-				isAvailable: document.querySelector(DOMstrings.inputIsAvailable).value, // returns yes or no
+				isAvailable: document.querySelector(DOMstrings.inputIsAvailable).value, // returns yes or no // TODO, make bool
 				title: document.querySelector(DOMstrings.inputTitle).value,
 				id: document.querySelector(DOMstrings.inputID).value,
 				collateral: document.querySelector(DOMstrings.inputCollateral).value		
 			}
+		},
+
+		getNewItem: function(obj, isAvailable) {
+			var html, newHTML, element;
+			//console.log(obj);
+
+			if (isAvailable === 'yes') {
+				element = DOMstrings.containerAvailable;
+				html = '<div class="item clearfix" id="available-0"><div class="item__description">%item%</div><div class="right clearfix"><div class="item__value">%collateral%</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div></div>';
+
+			} else if (isAvailable === 'no') {
+				element = DOMstrings.containerInUse;
+				html = '<div class="item clearfix" id="inuse-0"><div class="item__description">%item%</div><div class="right clearfix"><div class="item__value">%collateral%</div><div class="item__percentage">15%</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div></div>'
+			}
+
+			newHTML = html.replace('%item%', obj.title);
+			newHTML = newHTML.replace('%collateral%', obj.collateral);
+
+			document.querySelector(element).insertAdjacentHTML('beforeend',newHTML);
+
 		},
 
 		// make DOMsettings public and visible to the controller
@@ -92,8 +114,8 @@ var controller = (function(inventoryCtrl, UICtrl) {
 		// 2. Add the item to the inventory controller
 		newItem = inventoryCtrl.addItem(input.isAvailable, input.title, input.id, input.collateral);
 
-
 		// 3. Add a new item to UI
+		UICtrl.getNewItem(newItem, input.isAvailable);
 
 		// 4. Update the inventory
 
