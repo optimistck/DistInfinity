@@ -1,9 +1,26 @@
-// INVENTORY (i.e., Books) CONTROLLER (MODEL)
+// INVENTORY (i.e., Books) CONTROLLER (DATA MODEL)
 var inventoryController = (function() {
 
-	// some code
+	var Item = function(isAvailable, title, id, collateral) {
+		this.isAvailable = isAvailable;
+		this.title = title;
+		this.id = id;
+		this.collateral = collateral;
+	};
+
+	var inventory = {
+		allitems: {
+			books: []
+		},
+		status: {
+			totalAvailable: 0,
+			totalInUse: 0
+		}
+	}
+
 
 })();
+
 
 // UI CONTROLLER (VIEW)
 var UIController = (function() {
