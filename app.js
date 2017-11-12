@@ -16,7 +16,22 @@ var inventoryController = (function() {
 			totalAvailable: 0,
 			totalInUse: 0
 		}
-	}
+	}; 
+
+	var calculateTotalItems = function() {
+		inventory.status.totalAvailable = inventory.allItems.books.length;
+	};
+
+	var calculateTotalAvailable = function() {
+		var inUse = 0;
+		inventory.allItems.books.forEach(function(curr) {
+			if (curr.isAvailable === "no") {
+				inUse++;
+			}
+		});
+		inventory.status.totalInUse = inUse;
+
+	};
 
 
 	return {
@@ -26,6 +41,14 @@ var inventoryController = (function() {
 			// add new item object to the array of books
 			inventory.allItems.books.push(newItem);
 			return newItem;
+		},
+
+		calculateInventoryStatus: function() {
+
+			calculateTotalItems();
+			calculateTotalAvailable();
+
+
 		},
 
 		//temp
@@ -121,7 +144,7 @@ var controller = (function(inventoryCtrl, UICtrl) {
 	var updateTotals = function() {
 
 		// calculate totals
-
+		inventoryCtrl.calculateInventoryStatus();
 		// update totals
 
 		// display totals
