@@ -14,7 +14,8 @@ var inventoryController = (function() {
 		},
 		status: {
 			totalAvailable: 0,
-			totalInUse: 0
+			totalInUse: 0,
+			percentageInUse: -1
 		}
 	}; 
 
@@ -30,8 +31,15 @@ var inventoryController = (function() {
 			}
 		});
 		inventory.status.totalInUse = inUse;
-
 	};
+
+	var calculatePercentageInUse = function () {
+		if (inventory.status.totalAvailable > 0) {
+			inventory.status.percentageInUse = Math.round(100*(inventory.status.totalInUse / inventory.status.totalAvailable));
+		} else {
+			status.percentageInUse = -1;
+		}
+	}
 
 
 	return {
@@ -44,11 +52,17 @@ var inventoryController = (function() {
 		},
 
 		calculateInventoryStatus: function() {
-
 			calculateTotalItems();
 			calculateTotalAvailable();
+			calculatePercentageInUse();
+		},
 
-
+		getInventoryStatus: function() {
+			return {
+				totalAvailable: inventory.status.totalAvailable,
+				totalInUse: inventory.status.totalInUse,
+				percentageInUse: inventory.status.percentageInUse
+			}
 		},
 
 		//temp
@@ -146,8 +160,10 @@ var controller = (function(inventoryCtrl, UICtrl) {
 		// calculate totals
 		inventoryCtrl.calculateInventoryStatus();
 		// update totals
+		var inventoryStatus = inventoryCtrl.getInventoryStatus();
 
 		// display totals
+		console.log(inventoryStatus);
 	};
 
 	var ctrlAddItem = function() {
@@ -165,6 +181,7 @@ var controller = (function(inventoryCtrl, UICtrl) {
 			UICtrl.clearInputFields();
 
 			updateTotals();
+
 		}
 
 
