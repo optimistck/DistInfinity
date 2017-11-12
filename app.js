@@ -81,6 +81,19 @@ var UIController = (function() {
 
 		},
 
+		clearInputFields: function() {
+			var fields, fieldsArray;
+
+			fields = document.querySelectorAll(DOMstrings.inputTitle + ', ' + DOMstrings.inputID + ', ' + DOMstrings.inputCollateral);
+			fieldsArray = Array.prototype.slice.call(fields);
+			fieldsArray.forEach(function(arrayElement) {
+				arrayElement.value = "";
+			});
+
+			fieldsArray[0].focus();
+
+		},
+
 		// make DOMsettings public and visible to the controller
 		getDOMstrings: function() {
 			return DOMstrings;
@@ -116,6 +129,7 @@ var controller = (function(inventoryCtrl, UICtrl) {
 
 		// 3. Add a new item to UI
 		UICtrl.getNewItem(newItem, input.isAvailable);
+		UICtrl.clearInputFields();
 
 		// 4. Update the inventory
 
