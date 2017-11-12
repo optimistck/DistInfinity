@@ -57,7 +57,7 @@ var UIController = (function() {
 				isAvailable: document.querySelector(DOMstrings.inputIsAvailable).value, // returns yes or no // TODO, make bool
 				title: document.querySelector(DOMstrings.inputTitle).value,
 				id: document.querySelector(DOMstrings.inputID).value,
-				collateral: document.querySelector(DOMstrings.inputCollateral).value		
+				collateral: parseFloat(document.querySelector(DOMstrings.inputCollateral).value)		
 			}
 		},
 
@@ -118,22 +118,33 @@ var controller = (function(inventoryCtrl, UICtrl) {
 		});
 	};
 
+	var updateTotals = function() {
+
+		// calculate totals
+
+		// update totals
+
+		// display totals
+	};
+
 	var ctrlAddItem = function() {
 		var newItem;
 
 		// 1. Get the field input data
 		var input = UICtrl.getInput();
 
-		// 2. Add the item to the inventory controller
-		newItem = inventoryCtrl.addItem(input.isAvailable, input.title, input.id, input.collateral);
+		if (input.title !== "" && input.id != "" && !isNaN(input.collateral)) {
+			// 2. Add the item to the inventory controller
+			newItem = inventoryCtrl.addItem(input.isAvailable, input.title, input.id, input.collateral);
 
-		// 3. Add a new item to UI
-		UICtrl.getNewItem(newItem, input.isAvailable);
-		UICtrl.clearInputFields();
+			// 3. Add a new item to UI
+			UICtrl.getNewItem(newItem, input.isAvailable);
+			UICtrl.clearInputFields();
 
-		// 4. Update the inventory
+			updateTotals();
+		}
 
-		// 5. Display the inventory in UI
+
 
 	};
 
