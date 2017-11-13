@@ -143,6 +143,11 @@ var UIController = (function() {
 
 		},
 
+		deleteItemInList: function(itemId) {
+			var element = document.getElementById(itemId);
+			element.parentNode.removeChild(element);
+		},
+
 		clearInputFields: function() {
 			var fields, fieldsArray;
 
@@ -157,7 +162,6 @@ var UIController = (function() {
 		},
 
 		displayInventoryStatus: function(obj) {
-			console.log(obj);
 			document.querySelector(DOMstrings.totalLabel).textContent = obj.totalItems;
 			document.querySelector(DOMstrings.availableLabel).textContent = obj.totalAvailable;
 			document.querySelector(DOMstrings.inUseLabel).textContent = obj.totalInUse;
@@ -225,7 +229,12 @@ var controller = (function(inventoryCtrl, UICtrl) {
 		itemID = event.target.parentNode.parentNode.parentNode.parentNode.id;
 		splitID = itemID.split('-');
 		id = splitID[1];
+		// delete from the data structure
 		inventoryCtrl.deleteItem(id);
+		// delete from the DOM using both the prexif & the actual hash / id
+		UICtrl.deleteItemInList(itemID);
+		// update the UI
+		updateTotals();
 	};
 
 	return {
