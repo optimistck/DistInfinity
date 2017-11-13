@@ -56,6 +56,18 @@ var inventoryController = (function() {
 			return newItem;
 		},
 
+		deleteItem: function(id) {
+			// assume id is a hash and always unique
+			var itemsArray, index;
+			itemsArray = inventory.allItems.books;
+			if (itemsArray.includes(id)) {
+				index = itemIDsArray.indexOf(id);
+			}
+			if (index !== -1) {
+				inventory.allItems.books.splice(index, 1);
+			}
+		},
+
 		calculateInventoryStatus: function() {
 			calculateTotalItems();
 			calculateTotalInUse();
@@ -116,15 +128,16 @@ var UIController = (function() {
 
 			if (isAvailable === 'yes') {
 				element = DOMstrings.containerAvailable;
-				html = '<div class="item clearfix" id="available-0"><div class="item__description">%item%</div><div class="right clearfix"><div class="item__value">%collateral%</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div></div>';
+				html = '<div class="item clearfix" id="available-%id%"><div class="item__description">%item%</div><div class="right clearfix"><div class="item__value">%collateral%</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div></div>';
 
 			} else if (isAvailable === 'no') {
 				element = DOMstrings.containerInUse;
-				html = '<div class="item clearfix" id="inuse-0"><div class="item__description">%item%</div><div class="right clearfix"><div class="item__value">%collateral%</div><div class="item__percentage">15%</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div></div>'
+				html = '<div class="item clearfix" id="inuse-%id%"><div class="item__description">%item%</div><div class="right clearfix"><div class="item__value">%collateral%</div><div class="item__percentage">15%</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div></div>'
 			}
 
 			newHTML = html.replace('%item%', obj.title);
 			newHTML = newHTML.replace('%collateral%', obj.collateral);
+			newHTML = newHTML.replace('%id%', obj.id);
 
 			document.querySelector(element).insertAdjacentHTML('beforeend',newHTML);
 
@@ -208,12 +221,11 @@ var controller = (function(inventoryCtrl, UICtrl) {
 	};
 
 	var ctrlDeleteItem = function(event) {
-		var itemID, splitID, ID, itemState;
+		var itemID, splitID, id;
 		itemID = event.target.parentNode.parentNode.parentNode.parentNode.id;
 		splitID = itemID.split('-');
-		ID = splitID[1];
-		itemState = splitID[0];
-
+		id = splitID[1];
+		inventoryCtrl.deleteItem(id);
 	};
 
 	return {
