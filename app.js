@@ -96,7 +96,8 @@ var UIController = (function() {
 		availableLabel: '.inventory__available--value',
 		inUseLabel: '.inventory__inuse--value',
 		totalLabel: '.inventory__value', 
-		percentageInUseLabel: '.inventory__inuse--percentage'
+		percentageInUseLabel: '.inventory__inuse--percentage',
+		container: '.container'
 	}
 
 	return {
@@ -165,13 +166,15 @@ var controller = (function(inventoryCtrl, UICtrl) {
 	var initiateEventListeners = function() {
 		var DOM = UICtrl.getDOMstrings();
 		//event listener for click on "add" button. 
-		document.querySelector('.add__btn').addEventListener('click', ctrlAddItem);
+		document.querySelector(DOM.inputBtn).addEventListener('click', ctrlAddItem);
 		// event listener for the Enter key
 		document.addEventListener('keypress', function(event) {
 			if (event.keyCode === 13 || event.which === 13) {
 				ctrlAddItem();
 			}
 		});
+		// event listener for deleting of items
+		document.querySelector(DOM.container).addEventListener('click', ctrlDeleteItem);
 	};
 
 	var updateTotals = function() {
@@ -202,6 +205,14 @@ var controller = (function(inventoryCtrl, UICtrl) {
 			updateTotals();
 
 		}
+	};
+
+	var ctrlDeleteItem = function(event) {
+		var itemID, splitID, ID, itemState;
+		itemID = event.target.parentNode.parentNode.parentNode.parentNode.id;
+		splitID = itemID.split('-');
+		ID = splitID[1];
+		itemState = splitID[0];
 
 	};
 
