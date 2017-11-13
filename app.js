@@ -13,6 +13,7 @@ var inventoryController = (function() {
 			books: []
 		},
 		status: {
+			totalItems: 0,
 			totalAvailable: 0,
 			totalInUse: 0,
 			percentageInUse: -1
@@ -20,10 +21,10 @@ var inventoryController = (function() {
 	}; 
 
 	var calculateTotalItems = function() {
-		inventory.status.totalAvailable = inventory.allItems.books.length;
+		inventory.status.totalItems = inventory.allItems.books.length;
 	};
 
-	var calculateTotalAvailable = function() {
+	var calculateTotalInUse = function() {
 		var inUse = 0;
 		inventory.allItems.books.forEach(function(curr) {
 			if (curr.isAvailable === "no") {
@@ -34,11 +35,15 @@ var inventoryController = (function() {
 	};
 
 	var calculatePercentageInUse = function () {
-		if (inventory.status.totalAvailable > 0) {
-			inventory.status.percentageInUse = Math.round(100*(inventory.status.totalInUse / inventory.status.totalAvailable));
+		if (inventory.status.totalItems > 0) {
+			inventory.status.percentageInUse = Math.round(100*(inventory.status.totalInUse / inventory.status.totalItems));
 		} else {
 			status.percentageInUse = -1;
 		}
+	};
+
+	var calculateTotalAvailable = function() {
+		inventory.status.totalAvailable = inventory.status.totalItems - inventory.status.totalInUse;
 	}
 
 
@@ -53,15 +58,17 @@ var inventoryController = (function() {
 
 		calculateInventoryStatus: function() {
 			calculateTotalItems();
-			calculateTotalAvailable();
+			calculateTotalInUse();
 			calculatePercentageInUse();
+			calculateTotalAvailable();
 		},
 
 		getInventoryStatus: function() {
 			return {
-				totalAvailable: inventory.status.totalAvailable,
+				totalItems: inventory.status.totalItems,
 				totalInUse: inventory.status.totalInUse,
-				percentageInUse: inventory.status.percentageInUse
+				percentageInUse: inventory.status.percentageInUse,
+				totalAvailable: inventory.status.totalAvailable
 			}
 		},
 
@@ -85,7 +92,11 @@ var UIController = (function() {
 		inputCollateral: '.add__collateral',
 		inputBtn: '.add__btn', 
 		containerAvailable: '.available__list',
-		containerInUse: '.inuse__list'
+		containerInUse: '.inuse__list', 
+		availableLabel: '.inventory__available--value',
+		inUseLabel: '.inventory__inuse--value',
+		totalLabel: '.inventory__value', 
+		percentageInUseLabel: '.inventory__inuse--percentage'
 	}
 
 	return {
@@ -131,6 +142,14 @@ var UIController = (function() {
 
 		},
 
+		displayInventoryStatus: function(obj) {
+			console.log(obj);
+			document.querySelector(DOMstrings.totalLabel).textContent = obj.totalItems;
+			document.querySelector(DOMstrings.availableLabel).textContent = obj.totalAvailable;
+			document.querySelector(DOMstrings.inUseLabel).textContent = obj.totalInUse;
+			document.querySelector(DOMstrings.percentageInUseLabel).textContent = obj.percentageInUse + '%';
+		},
+
 		// make DOMsettings public and visible to the controller
 		getDOMstrings: function() {
 			return DOMstrings;
@@ -163,7 +182,7 @@ var controller = (function(inventoryCtrl, UICtrl) {
 		var inventoryStatus = inventoryCtrl.getInventoryStatus();
 
 		// display totals
-		console.log(inventoryStatus);
+		UICtrl.displayInventoryStatus(inventoryStatus);
 	};
 
 	var ctrlAddItem = function() {
@@ -184,12 +203,16 @@ var controller = (function(inventoryCtrl, UICtrl) {
 
 		}
 
-
-
 	};
 
 	return {
 		init: function() {
+			UICtrl.displayInventoryStatus({
+				totalItems: 0,
+				totalInUse: 0,
+				percentageInUse: -1,
+				totalAvailable: 0
+			});
 			initiateEventListeners();
 		}
 	}
