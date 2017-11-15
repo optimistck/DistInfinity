@@ -12,7 +12,7 @@ A book owner establishes a contract with a borrower. The borrower puts up a coll
 
 ## Getting Started
 
-These instructions will be updated.
+At the current stage the code is just a shell. You can download the code and load it locally. No database hooks yet. These instructions will be updated as projects progresses.
 
 
 ### Installing
