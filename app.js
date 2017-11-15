@@ -86,7 +86,7 @@ var inventoryController = (function() {
 
 		//temp
 		testing: function() {
-			console.log(inventory);
+			//console.log(inventory);
 		}
 
 	}
@@ -109,8 +109,18 @@ var UIController = (function() {
 		inUseLabel: '.inventory__inuse--value',
 		totalLabel: '.inventory__value', 
 		percentageInUseLabel: '.inventory__inuse--percentage',
-		container: '.container'
-	}
+		container: '.container',
+		dateLabel: '.inventory__title--month'
+	}; 
+
+
+	//nodelist. Reusable instead of a forEach. 
+	var nodeListForEach = function(list, callback) {
+		for (var i = 0; i < list.length; i++) {
+			// first class function
+			callback(list[i], i);
+		}
+	};
 
 	return {
 		getInput: function() {
@@ -132,7 +142,7 @@ var UIController = (function() {
 
 			} else if (isAvailable === 'no') {
 				element = DOMstrings.containerInUse;
-				html = '<div class="item clearfix" id="inuse-%id%"><div class="item__description">%item%</div><div class="right clearfix"><div class="item__value">%collateral%</div><div class="item__percentage">15%</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div></div>'
+				html = '<div class="item clearfix" id="inuse-%id%"><div class="item__description">%item%</div><div class="right clearfix"><div class="item__value">%collateral%</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div></div>'
 			}
 
 			newHTML = html.replace('%item%', obj.title);
@@ -144,8 +154,10 @@ var UIController = (function() {
 		},
 
 		deleteItemInList: function(itemId) {
-			var element = document.getElementById(itemId);
-			element.parentNode.removeChild(element);
+			if (itemId) {
+				var element = document.getElementById(itemId);
+				element.parentNode.removeChild(element);
+			}
 		},
 
 		clearInputFields: function() {
@@ -165,7 +177,32 @@ var UIController = (function() {
 			document.querySelector(DOMstrings.totalLabel).textContent = obj.totalItems;
 			document.querySelector(DOMstrings.availableLabel).textContent = obj.totalAvailable;
 			document.querySelector(DOMstrings.inUseLabel).textContent = obj.totalInUse;
-			document.querySelector(DOMstrings.percentageInUseLabel).textContent = obj.percentageInUse + '%';
+			if (parseInt(obj.percentageInUse) === -1) {
+				document.querySelector(DOMstrings.percentageInUseLabel).textContent = '--';
+			} else {
+				document.querySelector(DOMstrings.percentageInUseLabel).textContent = obj.percentageInUse + '%';
+			}
+		},
+
+		displayMonth: function() {
+			var now = new Date();
+			var month = now.getMonth();
+			var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
+			document.querySelector(DOMstrings.dateLabel).textContent = months[month];
+		},
+
+		changedType: function() {
+			var fields = document.querySelectorAll(
+				DOMstrings.inputIsAvailable + ',' +
+				DOMstrings.inputTitle + ',' +
+				DOMstrings.inputID + ',' +
+				DOMstrings.inputCollateral);
+
+			nodeListForEach(fields, function(cur) {
+				cur.classList.toggle('red-focus');
+			});
+
+			document.querySelector(DOMstrings.inputBtn).classList.toggle('red');
 		},
 
 		// make DOMsettings public and visible to the controller
@@ -192,6 +229,9 @@ var controller = (function(inventoryCtrl, UICtrl) {
 		});
 		// event listener for deleting of items
 		document.querySelector(DOM.container).addEventListener('click', ctrlDeleteItem);
+
+		// event listener for change of focus for deleting items
+		document.querySelector(DOM.inputIsAvailable).addEventListener('change', UICtrl.changedType);
 	};
 
 	var updateTotals = function() {
@@ -239,6 +279,7 @@ var controller = (function(inventoryCtrl, UICtrl) {
 
 	return {
 		init: function() {
+			UICtrl.displayMonth();
 			UICtrl.displayInventoryStatus({
 				totalItems: 0,
 				totalInUse: 0,
@@ -248,8 +289,6 @@ var controller = (function(inventoryCtrl, UICtrl) {
 			initiateEventListeners();
 		}
 	}
-
-
 
 
 })(inventoryController, UIController);
