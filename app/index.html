@@ -1,0 +1,92 @@
+<!-- starter HTML borrowed, with authorization, from codingheros.io  -->
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:100,300,400,600" rel="stylesheet" type="text/css">
+        <link href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css">
+        <title>Distributed Infinity</title>
+        <script src="./app.js"></script>
+    </head>
+    <body>
+        <div>
+          <h3>Test harness <span class="black"><span id="balance"></span> META</span></h3>
+          <h6>Send MetaCoin</h6>
+          <br><label for="amount">Amount:</label><input type="text" id="amount" placeholder="e.g., 95"></input>
+          <br><label for="receiver">To Address:</label><input type="text" id="receiver" placeholder="e.g., 0x93e66d9baea28c17d9fc393b53e3fbdd76899dae"></input>
+          <br><br><button id="send" onclick="App.sendCoin()">Send MetaCoin</button>
+          <span id="status"></span>
+        </div>
+        
+        <div class="top">
+            <div class="inventory">
+                <div class="inventory__title">
+                    Items in circulation for <span class="inventory__title--month">%Month%</span>
+                </div>
+                
+                <div class="inventory__value">50</div>
+                
+                <div class="inventory__available clearfix">
+                    <div class="inventory__available--text">Available</div>
+                    <div class="right">
+
+                        <div class="inventory__available--value">45</div>
+                        <div class="inventory__available--percentage">&nbsp;</div>
+                    </div>
+                </div>
+
+
+                
+                <div class="inventory__inuse clearfix">
+                    <div class="inventory__inuse--text">Inuse</div>
+                    <div class="right clearfix">
+                        <div class="inventory__inuse--value">5</div>
+                        <div class="inventory__inuse--percentage">45%</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+        <div class="bottom">
+            <div class="add">
+                <div class="add__container">
+                    <select class="is__available">
+                        <option value="yes" selected>+</option>
+                        <option value="no">-</option>
+                    </select>
+                    <input type="text" class="add__title" placeholder="Book title">
+                    <input type="text" class="add__id" placeholder="Item ID (hash)">
+                    <input type="number" class="add__collateral" placeholder="Value">
+                    <button class="add__btn"><i class="ion-ios-checkmark-outline"></i></button>
+                </div>
+            </div>
+            
+            <div class="container clearfix">
+                <div class="available">
+                    <h2 class="available__title">Available</h2>
+                    
+                    <div class="available__list">
+                       
+                        
+                    </div>
+                </div>
+                
+                
+                
+                <div class="inuse">
+                    <h2 class="inuse__title">In use</h2>
+                    
+                    <div class="inuse__list">
+                       
+                        
+                    </div>
+                </div>
+            </div>
+            
+            
+        </div>
+        
+    </body>
+</html>
